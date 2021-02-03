@@ -24,16 +24,33 @@ slides.forEach((slide, index) => {
     slide.addEventListener('mousemove', touchMove)
 })
 
+// Disble context menu
+window.oncontextmenu = function(event) {
+    event.preventDefault()
+    event.stopPropagation()
+    return false
+}
+
 function touchStart(index){
     return function(event){
-        console.log('start')
+        currentIndex = index
+        startPos = getPositionX(event)
+        isDragging = true
     }
 }
 
 function touchEnd(){
     console.log('end')
+    isDragging = false
 }
 
 function touchMove(){
     console.log('move')
+    if(isDragging){
+        console.log('move')
+    }
+}
+
+function getPositionX(event){
+    return event.type.includes('mouse') ? event.pageX : event.touches[0].clientX
 }
